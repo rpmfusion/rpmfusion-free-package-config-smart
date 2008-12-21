@@ -1,0 +1,16 @@
+[rpmfusion-free-updates]
+name=RPM Fusion for Fedora $releasever - Free - Updates
+baseurl=http://download1.rpmfusion.org/free/fedora/updates/$releasever/$basearch/
+type=rpm-md
+
+[rpmfusion-free-updates-debuginfo]
+name=RPM Fusion for Fedora $releasever - Free - Updates Debug
+baseurl=http://download1.rpmfusion.org/free/fedora/updates/$releasever/$basearch/debug/
+disabled=yes
+type=rpm-md
+
+[rpmfusion-free-updates-source]
+name=rpmfusion-free for Fedora $releasever - Source
+baseurl=http://download1.rpmfusion.org/free/fedora/updates/$releasever/SRPMS/
+disabled=yes
+type=rpm-md
