@@ -2,8 +2,8 @@
 
 Summary:    RPM Fusion (free) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
-Version:    10
-Release:    2
+Version:    8
+Release:    3
 License:    GPLv2+
 Group:      System Environment/Base
 URL:        http://rpmfusion.org/
@@ -22,7 +22,7 @@ manager to use RPM Fusion's "free" software repository.
 
 
 %prep
-cp %{SOURCE0} %{_builddir}
+cp %{SOURCE0} %{_builddir} ||:
 
 %build
 
@@ -32,7 +32,7 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels
 for channel in %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4};do
   name=$(basename $channel)
-  %{__install} -p -m0644 $channel $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
+  install -p -m0644 $channel $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
   sed -i 's/\$basearch/%{_target_cpu}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
   sed -i 's/\$releasever/%{fedora}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
 done
@@ -46,10 +46,14 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
-* Thu Dec 11 2008 Stewart Adam <s.adam at diffingo.com> 10-2
+* Sun Dec 21 2008 Stewart Adam <s.adam at diffingo.com> 8-3
+- Append ||: to cp so build doesn't fail on "make local"
+- Modifications for F-8 from universal SRPM
+
+* Thu Dec 11 2008 Stewart Adam <s.adam at diffingo.com> 8-2
 - Make summary and description fields clearer
 
-* Sat Dec 6 2008 Stewart Adam <s.adam at diffingo.com> 10-1
+* Sat Dec 6 2008 Stewart Adam <s.adam at diffingo.com> 8-1
 - Split rpmfusion-package-config-smart into free and nonfree
 - Don't use %%{__commandname} in some places but not others
 
