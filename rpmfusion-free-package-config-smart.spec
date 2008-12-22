@@ -3,7 +3,7 @@
 Summary:    RPM Fusion (free) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
 Version:    10
-Release:    3
+Release:    4
 License:    GPLv2+
 Group:      System Environment/Base
 URL:        http://rpmfusion.org/
@@ -22,7 +22,8 @@ manager to use RPM Fusion's "free" software repository.
 
 
 %prep
-cp %{SOURCE0} %{_builddir} ||:
+%setup -cT
+cp %{SOURCE0} .
 
 %build
 
@@ -46,6 +47,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
+* Mon Dec 22 2008 Stewart Adam <s.adam at diffingo.com> 10-4
+- Another workaround since buildsys doesn't seem to like ||:
+
 * Sun Dec 21 2008 Stewart Adam <s.adam at diffingo.com> 10-3
 - Append ||: to cp so build doesn't fail on "make local"
 
