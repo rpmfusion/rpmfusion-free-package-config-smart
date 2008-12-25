@@ -3,7 +3,7 @@
 Summary:    RPM Fusion (free) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
 Version:    11
-Release:    0.2
+Release:    0.3
 License:    GPLv2+
 Group:      System Environment/Base
 URL:        http://rpmfusion.org/
@@ -24,6 +24,7 @@ manager to use RPM Fusion's "free" software repository.
 %prep
 %setup -cT
 cp %{SOURCE0} .
+sleep 3m
 
 %build
 
@@ -47,6 +48,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
+* Thu Dec 25 2008 Stewart Adam <s.adam at diffingo.com> 11-0.3
+- Add "sleep 3m" to workaround buildsys bug
+
 * Mon Dec 22 2008 Stewart Adam <s.adam at diffingo.com> 11-0.2
 - Another workaround since buildsys doesn't seem to like ||:
 
