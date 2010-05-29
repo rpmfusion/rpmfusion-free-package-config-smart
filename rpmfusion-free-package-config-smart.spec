@@ -2,8 +2,8 @@
 
 Summary:    RPM Fusion (free) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
-Version:    11
-Release:    0.4
+Version:    13
+Release:    1
 License:    GPLv2+
 Group:      System Environment/Base
 URL:        http://rpmfusion.org/
@@ -48,6 +48,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
+* Sat May 29 2010 Stewart Adam <s.adam at diffingo.com> - 13-1
+- Update for F13
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 11-0.4
 - rebuild for new F11 features
 
