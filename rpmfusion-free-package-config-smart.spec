@@ -1,9 +1,15 @@
 %define debug_package %{nil}
 
+%ifarch %{ix86}
+%define basearch i386
+%else
+%define basearch %{_target_cpu}
+%endif
+
 Summary:    RPM Fusion (free) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
 Version:    12
-Release:    1
+Release:    2
 License:    GPLv2+
 Group:      System Environment/Base
 URL:        http://rpmfusion.org/
@@ -36,7 +42,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels
 for channel in %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4};do
   name=$(basename $channel)
   install -p -m0644 $channel $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
-  sed -i 's/\$basearch/%{_target_cpu}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
+  sed -i 's/\$basearch/%{basearch}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
   sed -i 's/\$releasever/%{fedora}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
 done
 
@@ -49,6 +55,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
+* Thu June 10 2010 Stewart Adam <s.adam at diffingo.com> - 12-2
+- Use hardcoded %%{basearch} instead of %%{_target_cpu} (fixes #1268)
+
 * Tue Dec 15 2009 Stewart Adam <s.adam at diffingo.com> - 12-1
 - Update for F-12
 
