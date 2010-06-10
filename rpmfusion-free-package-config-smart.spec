@@ -55,7 +55,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
-* Thu June 10 2010 Stewart Adam <s.adam at diffingo.com> - 12-2
+* Thu Jun 10 2010 Stewart Adam <s.adam at diffingo.com> - 12-2
 - Use hardcoded %%{basearch} instead of %%{_target_cpu} (fixes #1268)
 
 * Tue Dec 15 2009 Stewart Adam <s.adam at diffingo.com> - 12-1
