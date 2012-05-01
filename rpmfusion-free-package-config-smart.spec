@@ -8,7 +8,7 @@
 
 Summary:    RPM Fusion (free) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
-Version:    16
+Version:    17
 Release:    1
 License:    GPLv2+
 Group:      System Environment/Base
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
+* Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 17-1
+- Update for F-17
+
 * Mon Oct 17 2011 Nicolas Chauvet <kwizart@gmail.com> - 16-1
 - Update for F-16
 
