@@ -1,36 +1,48 @@
-%define debug_package %{nil}
+%global debug_package %{nil}
+
+%global	basearch %{_target_cpu}
 
 %ifarch	%{ix86}
-%define	basearch i386
-%else
-%define	basearch %{_target_cpu}
+%global	basearch i386
 %endif
 
-Summary:    RPM Fusion (free) configuration files for the Smart package manager
+%ifarch %{arm}
+%ifarch armv7hl armv7hnl
+%global	basearch armhfp
+%else
+%global	basearch arm
+%endif
+%endif
+
+%global repo free
+
+Summary:    RPM Fusion (%{repo}) configuration files for the Smart package manager
 Name:       rpmfusion-free-package-config-smart
 Version:    17
-Release:    1
+Release:    2
 License:    GPLv2+
 Group:      System Environment/Base
 URL:        http://rpmfusion.org/
 Source0:    COPYING
-Source1:    rpmfusion-free.channel
-Source2:    rpmfusion-free-rawhide.channel
-Source3:    rpmfusion-free-updates.channel
-Source4:    rpmfusion-free-updates-testing.channel
+Source1:    rpmfusion-%{repo}.channel
+Source2:    rpmfusion-%{repo}-rawhide.channel
+Source3:    rpmfusion-%{repo}-updates.channel
+Source4:    rpmfusion-%{repo}-updates-testing.channel
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Requires:   smart
-Provides:   smart-config-rpmfusion-free = %{version}-%{release}
+Provides:   smart-config-rpmfusion-%{repo} = %{version}-%{release}
+%if %repo == "nonfree"
+Requires:   rpmfusion-free-package-config-smart >= %{version}
+%endif
 
 %description
 This package provides the configuration files required by the Smart package
-manager to use RPM Fusion's "free" software repository.
+manager to use RPM Fusion's "%{repo}" software repository.
 
 
 %prep
 %setup -cT
 cp %{SOURCE0} .
-sleep 3m
 
 %build
 
@@ -43,6 +55,10 @@ for channel in %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4};do
   install -p -m0644 $channel $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
   sed -i 's/\$basearch/%{basearch}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
   sed -i 's/\$releasever/%{fedora}/' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
+%ifnarch %{ix86} x86_64
+  #Fedora secondary
+  sed -i 's/free\/fedora\//free\/fedora-secondary\//' $RPM_BUILD_ROOT%{_sysconfdir}/smart/channels/$name
+%endif
 done
 
 %clean
@@ -54,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/smart/channels/*.channel
 
 %changelog
+* Fri Sep 07 2012 Nicolas Chauvet <kwizart@gmail.com> - 17-2
+- Add support for secondary-arches
+
 * Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 17-1
 - Update for F-17
 
